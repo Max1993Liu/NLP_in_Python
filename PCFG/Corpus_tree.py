@@ -84,6 +84,7 @@ class Tree(list):
     def flatten(self):
         return Tree(self.label(), self.leaves())
 
+
     def height(self):
         max_child_height = 0
         for child in self:
@@ -92,6 +93,15 @@ class Tree(list):
             else:
                 max_child_height = max(max_child_height, 1)
         return 1 + max_child_height
+
+
+    def subtrees(self, filter=None):
+        if not filter or filter(self):
+            yield self
+        for child in self:
+            if isinstance(child, Tree):
+                for subtree in child.subtrees(filter):
+                    yield subtree
 
 
 
